@@ -1,0 +1,14 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "ones-skills",
+  "description": "Agent skills by @gceico for Claude Code.",
+  "owner": { "name": "Gabriel Ceicoschi", "url": "https://github.com/gceico" },
+  "plugins": [
+    {
+      "name": "ones-skills",
+      "source": "./",
+      "category": "productivity",
+      "description": "Bundles two agent skills: challenger (adversarial stress-tester for technical decisions, designs, and specs) and skill-forge (turns repeated manual workflows into reusable, validated Agent Skills)."
+    }
+  ]
+}
