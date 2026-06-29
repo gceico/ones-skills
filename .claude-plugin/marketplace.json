@@ -5,10 +5,16 @@
   "owner": { "name": "Gabriel Ceicoschi", "url": "https://github.com/gceico" },
   "plugins": [
     {
-      "name": "ones-skills",
-      "source": "./",
+      "name": "tool-box",
+      "source": "./plugins/tool-box",
       "category": "productivity",
       "description": "Bundles two agent skills: challenger (adversarial stress-tester for technical decisions, designs, and specs) and skill-forge (turns repeated manual workflows into reusable, validated Agent Skills)."
+    },
+    {
+      "name": "scira",
+      "source": "./plugins/scira",
+      "category": "productivity",
+      "description": "SCIRA — white-label LinkedIn creator ops loop: scout (swipe file), ideate (blue-ocean ideas), research (trends), analyze (your own stats). Local .md/.csv files only; depends on the last30days plugin for cross-platform research."
     }
   ]
 }

@@ -1,5 +1,5 @@
 {
-  "name": "ones-skills",
+  "name": "tool-box",
   "description": "Agent skills by @gceico: challenger (adversarial decision stress-tester) and skill-forge (workflow-to-skill builder).",
   "author": { "name": "Gabriel Ceicoschi", "url": "https://github.com/gceico" }
 }

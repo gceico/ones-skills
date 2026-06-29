@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-This repo contains Agent Skills installable via `npx skills add gceico/ones-skills`.
+A Claude Code marketplace. Each plugin is a folder under `plugins/`.
 
 Personal overrides go in `CLAUDE.local.md` (gitignored).
 
@@ -9,26 +9,28 @@ Personal overrides go in `CLAUDE.local.md` (gitignored).
 ## Structure
 
 ```
-skills/
-  <skill-name>/
-    SKILL.md        # skill definition with YAML frontmatter
+.claude-plugin/marketplace.json   # lists every plugin
+plugins/
+  <plugin-name>/
+    .claude-plugin/plugin.json    # name, description, author
+    skills/<skill-name>/SKILL.md  # YAML frontmatter: name, description
+    references/                   # optional shared docs
 ```
 
-## Adding a Skill
+## Adding a skill to an existing plugin
 
-1. Create `skills/<name>/SKILL.md`
-2. Add YAML frontmatter: `name`, `description`
-3. Write skill instructions below the frontmatter
-4. Push — installable immediately
+1. Create `plugins/<plugin>/skills/<name>/SKILL.md` with `name` + `description` frontmatter.
+2. Push — shipped on next install.
 
-## Testing a Skill Locally
+## Adding a new plugin
 
-```bash
-npx skills add ./skills/<name>
+1. `plugins/<plugin>/.claude-plugin/plugin.json` (`name`, `description`, `author`).
+2. Add its `skills/`.
+3. Add an entry to `.claude-plugin/marketplace.json` with `source: "./plugins/<plugin>"`.
+
+## Install
+
 ```
-
-## Installing from This Repo
-
-```bash
-npx skills add gceico/ones-skills --list   # browse all skills
-npx skills add gceico/ones-skills/<name>   # install one skill
+/plugin marketplace add gceico/ones-skills
+/plugin install <plugin>@ones-skills
+```
