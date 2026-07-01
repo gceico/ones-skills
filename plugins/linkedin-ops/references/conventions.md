@@ -1,13 +1,13 @@
-# SCIRA — shared conventions
+# linkedin-ops — shared conventions
 
 Every skill reads this file first, then loads config. Config schema, data-file schemas, directory
 resolution, and the last30days dependency live here and nowhere else. Don't redefine them in a skill.
 
 ## Config resolution (first hit wins)
 
-1. `./scira.config.md` (current working directory)
+1. `./linkedin-ops.config.md` (current working directory)
 
-If none found: copy `scira.config.example.md` to `./scira.config.md` in current dir,
+If none found: copy `linkedin-ops.config.example.md` to `./linkedin-ops.config.md` in current dir,
 tell the user to fill it, and stop. Don't invent niche/creators/profile.
 
 The config is Markdown with a single fenced ```yaml block. Parse that block. Fields:

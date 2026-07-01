@@ -1,6 +1,6 @@
-# SCIRA — config
+# linkedin-ops — config
 
-Copy this file to `scira.config.md` (in the folder you run Claude from, or `~/.config/scira/`)
+Copy this file to `linkedin-ops.config.md` (in the folder you run Claude from, or `~/.config/linkedin-ops/`)
 and fill the block below. That's the whole setup.
 
 ```yaml

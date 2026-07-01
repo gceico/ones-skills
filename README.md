@@ -7,7 +7,7 @@ A Claude Code marketplace of agent plugins, built by [@gceico](https://github.co
 ```
 /plugin marketplace add gceico/ones-skills
 /plugin install tool-box@ones-skills    # challenger + skill-forge
-/plugin install scira@ones-skills       # LinkedIn creator ops loop
+/plugin install linkedin-ops@ones-skills       # LinkedIn creator ops loop
 ```
 
 ## Plugins
@@ -15,7 +15,7 @@ A Claude Code marketplace of agent plugins, built by [@gceico](https://github.co
 | Plugin | Skills | What it does |
 |---|---|---|
 | [tool-box](plugins/tool-box/) | challenger, skill-forge | challenger stress-tests a technical decision before you commit; skill-forge turns workflows you keep redoing by hand into reusable, validated Agent Skills |
-| [scira](plugins/scira/) | scout, ideate, research, analyze | White-label LinkedIn creator ops loop on local `.md`/`.csv` files — scout creators into a swipe file, ideate blue-ocean angles, research trends, analyze your own stats |
+| [linkedin-ops](plugins/linkedin-ops/) | scout, ideate, research, analyze | White-label LinkedIn creator ops loop on local `.md`/`.csv` files — scout creators into a swipe file, ideate blue-ocean angles, research trends, analyze your own stats |
 
 ## Layout
 
@@ -25,7 +25,7 @@ plugins/
   tool-box/                       # one plugin per folder
     .claude-plugin/plugin.json
     skills/<name>/SKILL.md
-  scira/
+  linkedin-ops/
     .claude-plugin/plugin.json
     skills/<name>/SKILL.md
 ```
