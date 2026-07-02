@@ -22,6 +22,9 @@ The config is Markdown with a single fenced ```yaml block. Parse that block. Fie
 | `creators` | scout | list of LinkedIn handles (no `@`, no URL) to scout |
 | `ideas_file` | ideate | path to the running idea backlog. Default `<data_dir>/ideas.md`. |
 | `drafts_dir` | ideate | optional folder of existing drafts ideate reads + anchors to. Skip if unset. |
+| `icp` | connect | one-line ideal-customer profile; scores harvested leads (hi/med/lo). |
+| `outreach` | connect, outreach | block: `bucket`, `max_steps`, `intervals_days`, `daily_cap`, `sender_context`. |
+| `sequences` | outreach | per-bucket list of pre-approved message templates (`{name}`/`{context}`). |
 
 ## Data directory layout
 
@@ -31,6 +34,7 @@ All paths below are relative to `data_dir`
 <data_dir>/
   swipe-file.csv        # scout appends; competitor signal
   analytics.csv         # analyze appends; own performance
+  outreach.csv          # connect appends, outreach advances; the lead pipeline
   ideas.md              # ideate reads + grows; the running idea backlog
   reports/              # every skill writes dated markdown here
 ```
@@ -66,6 +70,23 @@ period,post_url,publish_date,impressions,engagements,engagement_rate,topic,forma
 - `topic`/`format`/`hook_type` filled by matching `post_url` against `swipe-file.csv` where possible, else blank.
 - De-dupe key: `post_url`. Skip a row whose `post_url` already exists for the same `period`.
 
+### outreach.csv (connect + outreach skills)
+
+Header (exact, in order):
+
+```
+profile_url,name,headline,source,bucket,icp_score,context_note,status,step,last_sent_date,next_due_date,last_checked_date,notes
+```
+
+- **Never hand-edit this file.** All writes go through `skills/outreach/scripts/pipeline.py`
+  (`add-leads` / `due` / `mark-sent` / `mark-replied` / `status`). It owns dedupe, interval math, and
+  step advancement so skills spend tokens on the browser + messages, not bookkeeping.
+- De-dupe key: `profile_url` (canonical `/in/<handle>/`, no query string).
+- `status` ∈ `new` / `active` / `replied` / `done` / `stopped`. `replied`/`done`/`stopped` are
+  terminal — never messaged again.
+- `step` 0..`max_steps`. `icp_score` ∈ `hi`/`med`/`lo`/blank. `source` e.g. `pending-invite` /
+  `recent-connection`.
+
 ## LinkedIn analytics xlsx layout (for the `analyze` skill)
 
 A LinkedIn "Content" analytics export contains these sheets:
@@ -90,9 +111,9 @@ or build a content calendar. Run hands-off: minimal questions, sensible defaults
 reading the local dbs and the web over asking. Where a step is blocked (Chrome down, rate-limited,
 last30days missing), save partial work and note the gap at the end of the report.
 
-## Browser pre-flight (scout + analyze download)
+## Browser pre-flight (scout, analyze, connect, outreach)
 
-Both Chrome-driven skills share this gate. Load Chrome tools via ToolSearch:
+Every Chrome-driven skill shares this gate. Load Chrome tools via ToolSearch:
 `select:mcp__claude-in-chrome__tabs_context_mcp,mcp__claude-in-chrome__navigate,mcp__claude-in-chrome__read_page,mcp__claude-in-chrome__computer,mcp__claude-in-chrome__tabs_create_mcp`.
 Confirm a browser is connected (`tabs_context_mcp`), navigate to `https://www.linkedin.com/feed/`, and
 confirm a logged-in nav/avatar (not a login wall). If not connected or not logged in: STOP and tell the

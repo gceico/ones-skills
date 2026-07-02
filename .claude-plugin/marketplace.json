@@ -14,7 +14,7 @@
       "name": "linkedin-ops",
       "source": "./plugins/linkedin-ops",
       "category": "productivity",
-      "description": "White-label LinkedIn creator ops loop: scout (swipe file), ideate (blue-ocean ideas), research (trends), analyze (your own stats). Local .md/.csv files only; depends on the last30days plugin for cross-platform research."
+      "description": "White-label LinkedIn ops loop: scout (swipe file), ideate (blue-ocean ideas), research (trends), analyze (your own stats), connect (harvest leads into a pipeline), outreach (pre-approved, stop-on-reply message sequence). Local .md/.csv files only; depends on the last30days plugin for cross-platform research."
     }
   ]
 }

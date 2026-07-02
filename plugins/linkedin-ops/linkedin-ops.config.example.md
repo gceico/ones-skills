@@ -1,7 +1,7 @@
 # linkedin-ops — config
 
-Copy this file to `linkedin-ops.config.md` (in the folder you run Claude from, or `~/.config/linkedin-ops/`)
-and fill the block below. That's the whole setup.
+Copy this file to `linkedin-ops.config.md` in the folder you run Claude from, and fill the block below.
+That's the whole setup.
 
 ```yaml
 # Where your tables + reports live. ~ expands; "." means the current folder.
@@ -36,6 +36,28 @@ ideas_file: ./data/ideas.md
 
 # Optional: folder of your in-progress drafts ideate anchors ideas to. Omit if none.
 # drafts_dir: ./data/drafts/
+
+# --- outreach (connect + outreach skills) ---
+# One-line ICP: who you target + qualifying signals + disqualifiers. Free text; scores harvested leads.
+icp: >
+  Target: <roles/titles>. Signals: <what makes them a fit>. Skip: <disqualifiers>.
+
+outreach:
+  bucket: warm-connections      # v1: a single bucket
+  max_steps: 3
+  intervals_days: [0, 4, 7]     # days to next step: step1 now, step2 +4d, step3 +7d
+  daily_cap: 15                 # max messages queued per outreach run
+  sender_context: >
+    Who you are in one line + the outcome you help with. Human, no pitch.
+
+# Pre-approved sequence for the bucket. {name} + {context} placeholders (context = the trigger/
+# observation from the lead's context_note). 3 short (150-350 char) human messages. No pitch in
+# step 1 — one easy question. Later steps lighter. Step 3 is the breakup. See references/outreach-method.md.
+sequences:
+  warm-connections:
+    - "Hey {name}, thanks for connecting! {context} — curious, how are you handling that right now?"
+    - "Hey {name}, no worries if you're busy — just bumping this in case it got buried."
+    - "Hey {name}, reaching out one last time before I disappear from your inbox. I'll assume the timing's off for now — just reply if that changes and I'll pick it back up."
 ```
 
 Loop + requirements: see `README.md`.

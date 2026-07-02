@@ -1,5 +1,5 @@
 {
   "name": "linkedin-ops",
-  "description": "A LinkedIn creator ops loop: Scout creators into a swipe file, Ideate blue-ocean angles over your drafts, Research topics & trends, and Analyze your own performance. Local .md/.csv files only.",
+  "description": "A LinkedIn ops loop: Scout creators into a swipe file, Ideate blue-ocean angles over your drafts, Research topics & trends, Analyze your own performance, and run people ops — Connect harvests leads into a pipeline and Outreach runs a pre-approved, stop-on-reply message sequence. Local .md/.csv files only.",
   "author": { "name": "Gabriel Ceicoschi", "url": "https://github.com/gceico" }
 }
