@@ -1,10 +1,12 @@
 # linkedin-ops
 
-**Sc**out · **I**deate · **R**esearch · **A**nalyze — a white-label LinkedIn creator **ops** loop on
-local files. Scout creators, research topics, ideate blue-ocean angles over your drafts, and analyze your
-own performance — no Notion, no creative drafting, no hardcoded niche. Config-driven, stored as `.md` + `.csv`.
+A white-label LinkedIn creator **ops** loop on local files. Scout creators, research topics, ideate
+blue-ocean angles over your drafts, analyze your own performance, and run people ops (connect + outreach) —
+no Notion, no creative drafting, no hardcoded niche. Config-driven, stored as `.md` + `.csv`.
 
-## Skills (the loop, in order)
+## Skills
+
+**Content loop, in order:**
 
 | # | Skill | Does | Runs on |
 |---|---|---|---|
@@ -13,7 +15,14 @@ own performance — no Notion, no creative drafting, no hardcoded niche. Config-
 | 3 | `ideate` | Weekly: cross swipe × research × analytics × your drafts/ideas → ranked blue-ocean ideas | local files only |
 | 4 | `analyze` | Monthly: download your LinkedIn export → insights; feeds back into step 3 | Chrome + Python/openpyxl |
 
-Data lives under `data_dir` (set in config): `swipe-file.csv`, `analytics.csv`, `ideas.md`, `reports/`.
+**People ops:**
+
+| Skill | Does | Runs on |
+|---|---|---|
+| `connect` | Harvest recent connections/pending invites into `outreach.csv` with a per-lead trigger note | Chrome + LinkedIn |
+| `outreach` | Run the pre-approved, stop-on-reply message sequence over harvested leads | Chrome + Python |
+
+Data lives under `data_dir` (set in config): `swipe-file.csv`, `analytics.csv`, `outreach.csv`, `ideas.md`, `reports/`.
 
 ## Setup
 

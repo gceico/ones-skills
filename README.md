@@ -15,7 +15,7 @@ A Claude Code marketplace of agent plugins, built by [@gceico](https://github.co
 | Plugin | Skills | What it does |
 |---|---|---|
 | [tool-box](plugins/tool-box/) | challenger, skill-forge | challenger stress-tests a technical decision before you commit; skill-forge turns workflows you keep redoing by hand into reusable, validated Agent Skills |
-| [linkedin-ops](plugins/linkedin-ops/) | scout, ideate, research, analyze | White-label LinkedIn creator ops loop on local `.md`/`.csv` files — scout creators into a swipe file, ideate blue-ocean angles, research trends, analyze your own stats |
+| [linkedin-ops](plugins/linkedin-ops/) | scout, ideate, research, analyze, connect, outreach | White-label LinkedIn creator ops loop on local `.md`/`.csv` files — scout creators into a swipe file, ideate blue-ocean angles, research trends, analyze your own stats, harvest leads into a pipeline, and run a pre-approved stop-on-reply outreach sequence |
 
 ## Layout
 

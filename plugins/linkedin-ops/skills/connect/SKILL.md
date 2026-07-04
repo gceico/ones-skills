@@ -68,7 +68,7 @@ Write the harvested leads to a temp JSON array (fields: profile_url, name, headl
 icp_score, context_note), then:
 
 ```
-python3 ../outreach/scripts/pipeline.py add-leads --data-dir "<data_dir>" --file <tmp.json>
+python3 "${CLAUDE_PLUGIN_ROOT}/skills/outreach/scripts/pipeline.py" add-leads --data-dir "<data_dir>" --file <tmp.json>
 ```
 
 It dedupes by `profile_url` (never re-adds someone already in the pipeline) and sets `status=new,step=0`.
