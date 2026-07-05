@@ -27,6 +27,8 @@ again. Enforced twice: the thread check in Step 3, and the terminal `replied` st
 2. Read `../../references/outreach-method.md` (message doctrine).
 3. From `config.outreach` you need: `bucket`, `max_steps`, `intervals_days`, `daily_cap`,
    `sender_context`, and `sequences`. If the block is missing, point the user at the example and stop.
+4. If `config.voice_files` is set, Read each listed file (paths relative to the config) — these define
+   how the user actually writes. They govern word choice and rhythm in Step 4; skip silently if unset.
 
 Let `TODAY` = the run date (get it: `date +%F`). Let `INTERVALS` = `intervals_days` joined by commas
 (e.g. `0,4,7`).
@@ -61,8 +63,10 @@ When in doubt (ambiguous thread), treat as replied and drop — never risk doubl
 
 For each remaining lead, take the template at index `next_step - 1` from `config.sequences[bucket]`.
 Fill `{name}` and weave `{context}` (the trigger/observation from `context_note`) into a natural line —
-step 1 must carry one specific observation, not name-only. Voice from `config.outreach.sender_context`
-and the doctrine in `outreach-method.md`. Keep each 150–350 chars, one easy question, no pitch in step 1.
+step 1 must carry one specific observation, not name-only. Voice from `config.outreach.sender_context`,
+the `voice_files` loaded in Step 0 (word choice, rhythm, banned phrases — these win over generic
+politeness), and the doctrine in `outreach-method.md`. Keep each 150–350 chars, one easy question,
+no pitch in step 1.
 
 **Lint before showing:** reject any draft that still contains an unfilled `{placeholder}`, a leftover
 `<topic>`-style stub, or double-spaces — those are the exact tells that read as mail-merge spam. Rewrite

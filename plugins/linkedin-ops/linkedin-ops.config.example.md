@@ -42,6 +42,12 @@ ideas_file: ./data/ideas.md
 icp: >
   Target: <roles/titles>. Signals: <what makes them a fit>. Skip: <disqualifiers>.
 
+# Optional: your own tone-of-voice / writing-style docs. Outreach reads these before drafting
+# so messages sound like you, not a template engine. Paths relative to this config file. Omit if none.
+# voice_files:
+#   - knowledge/brand/tone-of-voice.md
+#   - knowledge/writing/my-voice.md
+
 outreach:
   bucket: warm-connections      # v1: a single bucket
   max_steps: 3

@@ -1,13 +1,14 @@
 ---
 name: ideate
 description: >
-  Blue-ocean content ideation over your existing drafts and ideas. ALWAYS invoke when the user says
-  "ideate", "find blue ocean ideas", "what should I write about", "give me ideas", "sharpen my drafts",
-  or "find white space I can own". Crosses the swipe file (what's saturated/working out there), the
+  Blue-ocean ideation engine over your existing drafts and ideas — the raw scan, not a weekly content
+  plan. ALWAYS invoke when the user says "ideate", "find blue ocean ideas", "sharpen my drafts", or
+  "find white space I can own". Crosses the swipe file (what's saturated/working out there), the
   latest research brief (trends + white-space), your own analytics (what works for YOU), and your
   drafts/ideas backlog to surface uncontested ideas that fit you — ranked, each layered on top of an
   existing draft or idea where possible. Do NOT use to scrape creators (scout), research a topic
-  from scratch (research), or download analytics. This skill reads local files only.
+  from scratch (research), or download analytics. If a personal planning/radar skill is installed,
+  "what should I post this week" belongs to it — it consumes this skill's report. Reads local files only.
 allowed-tools: Read, Write, Edit, Bash, Glob, Grep, AskUserQuestion
 ---
 

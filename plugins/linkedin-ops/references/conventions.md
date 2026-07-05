@@ -23,6 +23,7 @@ The config is Markdown with a single fenced ```yaml block. Parse that block. Fie
 | `ideas_file` | ideate | path to the running idea backlog. Default `<data_dir>/ideas.md`. |
 | `drafts_dir` | ideate | optional folder of existing drafts ideate reads + anchors to. Skip if unset. |
 | `icp` | connect | one-line ideal-customer profile; scores harvested leads (hi/med/lo). |
+| `voice_files` | optional (outreach) | list of paths to the user's own tone-of-voice / writing-style docs. Skills that write in the user's name read these before drafting so output sounds like the user, not a template engine. Paths resolve relative to the config file. Skip if unset. |
 | `outreach` | connect, outreach | block: `bucket`, `max_steps`, `intervals_days`, `daily_cap`, `sender_context`. |
 | `sequences` | outreach | per-bucket list of pre-approved message templates (`{name}`/`{context}`). |
 
