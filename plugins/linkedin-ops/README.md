@@ -45,3 +45,9 @@ Distilled from a private Notion-coupled creator system, stripped to portable ops
 blue-ocean ideas anchored to your own drafts* — no finished-post drafting, no voice/brand layer, no
 content calendar. linkedin-ops finds, measures, distills, and ideates; you decide what to write and write it.
 See the shared `references/conventions.md` for the config + data schemas every skill reads.
+
+---
+
+This loop is the one I actually run to grow the audience for [**Aibl**](https://aibl.to) — the workshops
+Nizar and I do, where teams turn their own expertise into AI agents they use the next day. If you're
+trying to build your own ops loop like this and want a hand, [come say hi](https://aibl.to). — Gabriel
