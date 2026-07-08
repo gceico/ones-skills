@@ -86,7 +86,7 @@ profile_url,name,headline,source,bucket,icp_score,context_note,status,step,last_
 - `status` ∈ `new` / `active` / `replied` / `done` / `stopped`. `replied`/`done`/`stopped` are
   terminal — never messaged again.
 - `step` 0..`max_steps`. `icp_score` ∈ `hi`/`med`/`lo`/blank. `source` e.g. `pending-invite` /
-  `recent-connection`.
+  `recent-connection` / `post-commenter` / `post-liker`.
 
 ## LinkedIn analytics xlsx layout (for the `analyze` skill)
 

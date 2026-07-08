@@ -1,6 +1,6 @@
 # tool-box
 
-Two agent skills I reach for constantly, bundled together.
+Agent skills I reach for constantly, bundled together.
 
 ## Skills
 
@@ -8,6 +8,7 @@ Two agent skills I reach for constantly, bundled together.
 |---|---|
 | `challenger` | Becomes an adversarial reviewer that stress-tests a technical decision — an architecture call, a stack pick, a spec, a migration plan — then forces a defend/revise verdict on the riskiest parts. For when you're the author *and* the only reviewer, tired, and biased toward shipping. |
 | `skill-forge` | Turns the work you keep redoing by hand into a real, reusable Agent Skill — interviews you, gates on research, picks the right shape, drafts with progressive disclosure, then role-plays a mock user to prove it works before you trust it. |
+| `autopilot` | Owns a feature or bugfix end-to-end while you walk away: hunts unknowns, freezes a contract of checkable acceptance criteria, runs a budgeted build loop, then gates delivery on an independent verifier that re-runs every check blind. Ends with an evidence packet and a project-memory write-back — or an honest failure report. |
 
 ## Install
 
@@ -15,7 +16,7 @@ Two agent skills I reach for constantly, bundled together.
 /plugin install tool-box@ones-skills
 ```
 
-Then just say things like *"challenge this design"*, *"poke holes in this approach"*, or *"turn this workflow into a skill"*.
+Then just say things like *"challenge this design"*, *"poke holes in this approach"*, *"turn this workflow into a skill"*, or *"take this end-to-end on autopilot"*.
 
 ---
 

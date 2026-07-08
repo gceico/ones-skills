@@ -19,7 +19,7 @@ no Notion, no creative drafting, no hardcoded niche. Config-driven, stored as `.
 
 | Skill | Does | Runs on |
 |---|---|---|
-| `connect` | Harvest recent connections/pending invites into `outreach.csv` with a per-lead trigger note | Chrome + LinkedIn |
+| `connect` | Harvest leads into `outreach.csv` with a per-lead trigger note — recent connections/pending invites, or the ICP-matching commenters/likers of a specific post | Chrome + LinkedIn |
 | `outreach` | Run the pre-approved, stop-on-reply message sequence over harvested leads | Chrome + Python |
 
 Data lives under `data_dir` (set in config): `swipe-file.csv`, `analytics.csv`, `outreach.csv`, `ideas.md`, `reports/`.

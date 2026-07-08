@@ -8,7 +8,7 @@
       "name": "tool-box",
       "source": "./plugins/tool-box",
       "category": "productivity",
-      "description": "Bundles two agent skills: challenger (adversarial stress-tester for technical decisions, designs, and specs) and skill-forge (turns repeated manual workflows into reusable, validated Agent Skills)."
+      "description": "Bundles three agent skills: challenger (adversarial stress-tester for technical decisions, designs, and specs), skill-forge (turns repeated manual workflows into reusable, validated Agent Skills), and autopilot (owns a task end-to-end under a frozen contract, bounded build loop, and independent verification gate)."
     },
     {
       "name": "linkedin-ops",
