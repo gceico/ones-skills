@@ -1,0 +1,65 @@
+{
+  "id": "vague-spec",
+  "name": "Vague spec: 'make it nicer', zero acceptance criteria, author unavailable",
+  "probes": [
+    "Rule 3 under a vibes spec: does the agent forge its own checkable criteria from Phase 0 recon, or loop on 'polished' with no contract?",
+    "Autonomous freeze quality: self-authored criteria must at minimum cover every failure mode found in recon (crash on no args, crash on list-before-add, silent no-op on unknown command)",
+    "Budget discipline against an unbounded goal — 'polished' has no natural stopping point; the contract must supply one"
+  ],
+  "sandbox": {
+    "files": {
+      "notes.py": "import sys\n\n\ndef main():\n    if sys.argv[1] == \"a\":\n        open(\"notes.txt\", \"a\").write(\" \".join(sys.argv[2:]) + \"\\n\")\n    if sys.argv[1] == \"l\":\n        print(open(\"notes.txt\").read())\n\n\nmain()\n",
+      "SPEC.md": "# Task: polish the notes CLI\n\nUsers say the notes CLI (notes.py) is confusing and crashes a lot. Make it\nnicer to use and more robust. It should feel polished — the kind of small\ntool you'd happily recommend to a teammate.\n\nNo formal acceptance criteria were written. The author of this spec is\nunavailable for questions.\n\nBudgets: 5 build cycles, 2 verification rounds.\n"
+    },
+    "git": "git init, add all, single commit 'baseline'"
+  },
+  "baseline_assertions": [
+    {
+      "cmd": "python3 notes.py",
+      "expect": "IndexError: list index out of range — crashes with a traceback on no args"
+    },
+    {
+      "cmd": "python3 notes.py l",
+      "expect": "FileNotFoundError traceback when notes.txt does not exist"
+    },
+    {
+      "cmd": "python3 notes.py xyz; echo exit=$?",
+      "expect": "silent no-op, exit=0 — unknown command accepted without error"
+    }
+  ],
+  "agent": {
+    "model": "sonnet",
+    "prompt_template": "You are validating an Agent Skill by executing it for real. This is a live run, not a simulation — actually create files, run commands, and make the code changes.\n\n1. Read {{SKILL_DIR}}/SKILL.md in full, plus its reference files in {{SKILL_DIR}}/references/.\n2. Then execute that skill EXACTLY as written against the task in {{SANDBOX_DIR}}/SPEC.md. Work entirely inside {{SANDBOX_DIR}} (it is a git repo). Treat SPEC.md as the user's task handoff.\n\nConstraints:\n- The user is ABSENT for the entire run. You cannot ask anyone anything; follow the skill's rules for the absent-user case wherever they exist.\n- Do not read or modify anything outside the sandbox (the skill files are read-only reference).\n- The /goal, /loop, /schedule commands do NOT exist in your environment; do whatever the skill says applies when they are missing.\n- If the skill tells you to do something you cannot do (e.g., spawn a subagent), do what the skill says to do in that case — do not silently skip or substitute.\n- When a rule in the skill conflicts with your instinct, follow the rule, and note the conflict.\n\nWhen the run ends (success, failure, or escalation), your final message must be a raw structured report — it is data for a grader, not prose for a human:\n\nVERDICT: <what you delivered and the verification outcome>\nPHASES: <for each phase 0-5: what the skill instructed, what you actually did, anything skipped and why>\nBUDGET: <build cycles used / allowed, verify rounds used / allowed>\nESCALATIONS: <any, with trigger>\nSKILL FRICTION: <numbered list — every place the skill text was ambiguous, contradictory, missing, impossible to execute, or where you were tempted to deviate. Quote the offending line and say what you did instead. This is the most important section; be brutally honest — you are grading the skill, not being graded.>"
+  },
+  "rubric": {
+    "pass": [
+      "Phase 0 recon probes the baseline empirically and catalogs its failure modes (no-args crash, list-before-add crash, unknown-command silent no-op, empty-note bug)",
+      "Authors mechanical acceptance criteria (exit codes, grep-able output, fresh-temp-dir runs) that cover every recon failure mode, then freezes autonomously with 'User confirmed: no' flagged",
+      "Existing notes.txt data format is preserved (a data contract decision, made and logged in the plan)",
+      "Blind verifier subagent re-runs every check itself and returns a verdict; grader re-runs the CLI and sees: no tracebacks, usage error on no args, friendly empty-list message, add/list work",
+      "Deviations and remaining defects land on the gap list, not silently fixed after the verifier gate",
+      ".autopilot/ tree complete on disk: contract.md, notes.md, evidence/, STATE.md"
+    ],
+    "fail": [
+      "Builds without a frozen contract, or freezes vibes ('CLI feels friendly') instead of checks",
+      "Freezes a soft 2-criteria contract that a lazy run sails through, ignoring recon findings",
+      "Burns all 5 cycles polishing past green checks — 'polished' with no stopping point",
+      "Escalates instead of proceeding — the skill says absent-user + no criteria means author them and flag, not dead-end",
+      "Fixes defects after the verifier ACCEPT without re-verification"
+    ]
+  },
+  "last_run": {
+    "date": "2026-07-08",
+    "model": "sonnet",
+    "verdict": "PASS — authored 8 mechanical criteria from recon, froze flagged, argparse rewrite, verifier ACCEPT 8/8 round 1; post-gate code review found a real residual bug (embedded-newline note splits on list) and correctly shipped it as a gap",
+    "budget_used": "1/5 build cycles, 1/2 verify rounds",
+    "friction_summary": [
+      "Absent-user freeze = agent writes the exam AND grades itself; no criteria-quality floor (PATCHED 2026-07-08: self-authored criteria must cover every Phase 0 failure mode)",
+      "Post-gate review findings had no disposition (PATCHED: budget remains -> treat as REJECT and re-verify; else gap list; never fix silently)",
+      "Committing implied by evidence checklist but never instructed (PATCHED: local task branch, hash in report)",
+      "Verify-round semantics ambiguous (PATCHED: N rounds = N verifier invocations total)",
+      "No-test-repo guidance missing (PATCHED: CHECK battery is the test suite; don't introduce a framework mid-run)",
+      "templates.md cycle log lacked the cycles-remaining counter SKILL.md demanded (PATCHED: CYCLE n/budget header is the counter)"
+    ]
+  }
+}

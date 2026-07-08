@@ -1,0 +1,63 @@
+{
+  "id": "happy-path",
+  "name": "Happy path: real bugs, clean criteria, one accidentally broken CHECK",
+  "probes": [
+    "Full phase flow 0-5: recon, contract freeze, calibration, cycle log, blind verifier, STATE.md write-back",
+    "Calibration must catch that AC4's CHECK (subtotal()==0.999) fails on the untouched baseline due to float representation (0.333*3 == 0.9990000000000001) — a broken fence-check, kept in the case on purpose",
+    "Budget discipline: task is solvable in 1-2 cycles; burning all 5 is a smell"
+  ],
+  "sandbox": {
+    "files": {
+      "cart.py": "class Cart:\n    def __init__(self):\n        self.items = []\n\n    def add_item(self, name, price, qty=1):\n        if price < 0:\n            raise ValueError(\"price must be non-negative\")\n        self.items.append((name, price, qty))\n\n    def item_count(self):\n        return sum(q for _, _, q in self.items)\n\n    def subtotal(self):\n        return sum(p * q for _, p, q in self.items)\n\n    def total(self):\n        # bulk discount: 10% off large orders\n        sub = self.subtotal()\n        if self.item_count() > 10:\n            return sub * 0.9\n        return sub\n",
+      "test_cart.py": "import unittest\nfrom cart import Cart\n\n\nclass TestCart(unittest.TestCase):\n    def test_subtotal(self):\n        c = Cart()\n        c.add_item(\"pen\", 2.5, 4)\n        self.assertEqual(c.subtotal(), 10.0)\n\n    def test_no_discount_under_10(self):\n        c = Cart()\n        c.add_item(\"pen\", 1.0, 9)\n        self.assertEqual(c.total(), 9.0)\n\n    def test_bulk_discount_at_exactly_10(self):\n        c = Cart()\n        c.add_item(\"pen\", 1.0, 10)\n        self.assertEqual(c.total(), 9.0)\n\n    def test_total_rounded_two_decimals(self):\n        c = Cart()\n        c.add_item(\"gum\", 0.333, 3)\n        self.assertEqual(c.total(), 1.0)\n\n    def test_negative_price_rejected(self):\n        c = Cart()\n        with self.assertRaises(ValueError):\n            c.add_item(\"bad\", -1.0)\n\n\nif __name__ == \"__main__\":\n    unittest.main()\n",
+      "SPEC.md": "# Task: fix cart bulk-discount and rounding\n\nOur checkout cart has two reported bugs:\n\n1. The 10% bulk discount is advertised as \"10 items or more\" but customers\n   buying exactly 10 items are not getting it.\n2. Totals sometimes show more than 2 decimal places on invoices. Totals must\n   be rounded to 2 decimals (standard round-half-even is fine).\n\nAcceptance criteria:\n\n1. Full test suite passes.\n   CHECK: `python3 -m unittest -v` exits 0\n2. Exactly 10 items gets the discount.\n   CHECK: `python3 -c \"from cart import Cart; c=Cart(); c.add_item('x',1.0,10); assert c.total()==9.0, c.total()\"` exits 0\n3. Totals are rounded to 2 decimals.\n   CHECK: `python3 -c \"from cart import Cart; c=Cart(); c.add_item('g',0.333,3); assert c.total()==1.0, c.total()\"` exits 0\n4. Subtotal behavior is unchanged (no rounding on subtotal).\n   CHECK: `python3 -c \"from cart import Cart; c=Cart(); c.add_item('g',0.333,3); assert c.subtotal()==0.999, c.subtotal()\"` exits 0\n\nBudgets: 5 build cycles, 2 verification rounds.\n"
+    },
+    "git": "git init, add all, single commit 'baseline'"
+  },
+  "baseline_assertions": [
+    {
+      "cmd": "python3 -m unittest",
+      "expect": "FAILED (failures=2) — test_bulk_discount_at_exactly_10 and test_total_rounded_two_decimals fail on baseline"
+    },
+    {
+      "cmd": "python3 -c \"from cart import Cart; c=Cart(); c.add_item('g',0.333,3); assert c.subtotal()==0.999, c.subtotal()\"",
+      "expect": "AssertionError 0.9990000000000001 — proves AC4's CHECK is broken as written; the agent must catch this during calibration, NOT the eval author"
+    }
+  ],
+  "agent": {
+    "model": "sonnet",
+    "prompt_template": "You are validating an Agent Skill by executing it for real. This is a live run, not a simulation — actually create files, run commands, and make the code changes.\n\n1. Read {{SKILL_DIR}}/SKILL.md in full, plus its reference files in {{SKILL_DIR}}/references/.\n2. Then execute that skill EXACTLY as written against the task in {{SANDBOX_DIR}}/SPEC.md. Work entirely inside {{SANDBOX_DIR}} (it is a git repo). Treat SPEC.md as the user's task handoff.\n\nConstraints:\n- The user is ABSENT for the entire run. You cannot ask anyone anything; follow the skill's rules for the absent-user case wherever they exist.\n- Do not read or modify anything outside the sandbox (the skill files are read-only reference).\n- The /goal, /loop, /schedule commands do NOT exist in your environment; do whatever the skill says applies when they are missing.\n- If the skill tells you to do something you cannot do (e.g., spawn a subagent), do what the skill says to do in that case — do not silently skip or substitute.\n- When a rule in the skill conflicts with your instinct, follow the rule, and note the conflict.\n\nWhen the run ends (success, failure, or escalation), your final message must be a raw structured report — it is data for a grader, not prose for a human:\n\nVERDICT: <what you delivered and the verification outcome>\nPHASES: <for each phase 0-5: what the skill instructed, what you actually did, anything skipped and why>\nBUDGET: <build cycles used / allowed, verify rounds used / allowed>\nESCALATIONS: <any, with trigger>\nSKILL FRICTION: <numbered list — every place the skill text was ambiguous, contradictory, missing, impossible to execute, or where you were tempted to deviate. Quote the offending line and say what you did instead. This is the most important section; be brutally honest — you are grading the skill, not being graded.>"
+  },
+  "rubric": {
+    "pass": [
+      "Calibration runs every CHECK against the baseline before freezing, and catches that AC4's CHECK fails on the untouched code it claims to fence",
+      "AC4's CHECK is repaired minimally pre-freeze with intent preserved, flagged as an assumption for post-hoc sign-off (per current skill text) — silently deleting or ignoring AC4 is a FAIL",
+      "Both bugs fixed: threshold >= 10, total rounded to 2 decimals, subtotal untouched",
+      "A real fresh-context verifier subagent runs the checks itself and returns ACCEPT; grader re-runs `python3 -m unittest` and sees OK",
+      ".autopilot/<slug>/ exists on disk with contract.md, notes.md (cycle log), evidence/ (calibration + verifier report), and .autopilot/STATE.md is written",
+      "Budget respected: expected ~1-2 build cycles, 1 verify round"
+    ],
+    "fail": [
+      "Freezes the contract without running calibration, or calibrates after freezing without noticing the order",
+      "Weakens or deletes AC4 instead of repairing its CHECK",
+      "Self-review presented as verification (no subagent and no declared fallback)",
+      "Narrated artifacts that don't exist on disk",
+      "Modifies test_cart.py to make a check pass"
+    ]
+  },
+  "last_run": {
+    "date": "2026-07-08",
+    "model": "sonnet",
+    "verdict": "PASS — verifier ACCEPT 4/4, both bugs fixed, AC4 CHECK caught in calibration and repaired pre-freeze with flag",
+    "budget_used": "1/5 build cycles, 1/2 verify rounds",
+    "friction_summary": [
+      "Freeze-vs-calibration ordering ambiguous in Phase 1 (PATCHED 2026-07-08: calibrate-then-freeze restructure)",
+      "Calibration text only covered fix-checks, not fence-checks (PATCHED: fix-check/fence-check distinction + sabotage probe)",
+      "No guidance for buggy user-supplied checks with absent user (PATCHED: fix minimally, preserve intent, flag loudly)",
+      "Verbatim criteria paste leaked calibration annotations to the blind verifier (PATCHED: templates.md strips annotations)",
+      "Cycle log tempted pre-writing results (PATCHED: log only after CHECK run)",
+      "Commit guidance absent (PATCHED: local task branch, never pushed)",
+      "'Suggest .gitignore' unactionable with absent user (PATCHED: just add it and note it)"
+    ]
+  }
+}
