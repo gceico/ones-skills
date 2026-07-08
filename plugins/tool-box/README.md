@@ -20,7 +20,6 @@ Then just say things like *"challenge this design"*, *"poke holes in this approa
 
 ---
 
-`challenger` came out of arguing with myself before committing to a build; `skill-forge` is how most of the
-other skills in this marketplace got made. Both grew out of running [**Aibl**](https://aibl.to) with Nizar —
+These skills grew out of running [**Aibl.to**](https://aibl.to) with Nizar,
 hands-on workshops where teams turn their own expertise into AI agents they use the next day. If you're
 building your own skills and want to think it through with someone, [come say hi](https://aibl.to). — Gabriel

@@ -48,6 +48,6 @@ See the shared `references/conventions.md` for the config + data schemas every s
 
 ---
 
-This loop is the one I actually run to grow the audience for [**Aibl**](https://aibl.to) — the workshops
+This loop is the one I actually run to grow the audience for [**Aibl.to**](https://aibl.to), the workshops
 Nizar and I do, where teams turn their own expertise into AI agents they use the next day. If you're
 trying to build your own ops loop like this and want a hand, [come say hi](https://aibl.to). — Gabriel
