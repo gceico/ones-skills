@@ -29,6 +29,8 @@ failing idea, and grind past their budget. The structure is the defense.
    edit the criteria, weaken a check, or modify a test that encodes a criterion in a
    way that makes it easier to pass. If a criterion turns out to be wrong or
    unachievable, stop and escalate — changing the goalposts is the user's call.
+   An assumption may fill a gap in the criteria; it may never override one.
+   Conflicting criteria are an escalation, not an ambiguity to resolve yourself.
 3. **Every criterion must be checkable.** Each one names an exact command to run or
    an exact observation to make. "Works well" is not a criterion; "`npm test` exits
    0" and "POST /orders returns 201 with an `id` field" are. If you can't write the
@@ -46,8 +48,9 @@ failing idea, and grind past their budget. The structure is the defense.
 
 ## Run artifacts
 
-Create `.autopilot/<task-slug>/` in the repo at the start (suggest adding
-`.autopilot/` to `.gitignore` if it isn't ignored). Everything lives there:
+Create `.autopilot/<task-slug>/` in the repo at the start (add `.autopilot/` to
+`.gitignore` if it isn't already ignored, and note that in the report).
+Everything lives there:
 
 ```
 .autopilot/
@@ -72,8 +75,9 @@ Then hunt what you don't know. Unknowns found now cost minutes; found in cycle 4
 they cost the whole budget. Run whichever of these apply, skip what's already clear:
 
 - **Conventions read.** Find 2–3 files in the repo that do something similar to the
-  task and read them fully. Match their patterns — naming, error handling, test
-  style. The repo's existing code outranks your habits.
+  task and read them fully — in a tiny repo, read the whole codebase. Match their
+  patterns — naming, error handling, test style. The repo's existing code outranks
+  your habits.
 - **Blindspot pass.** Ask yourself explicitly, and write the answers into
   `notes.md`: what is this task assuming about the environment, the data, or the
   load that nobody said out loud? What would a maintainer of this repo warn me
@@ -88,6 +92,14 @@ Output: an unknowns list in `notes.md`, each entry resolved or converted to an
 explicit assumption.
 
 ## Phase 1 — Contract (the freeze point)
+
+If a spec-authoring skill is available in your environment (e.g.
+`create-specification`), work the spec out with it first: it produces the
+structured, unambiguous, machine-readable requirements document this phase
+needs, and a spec the user handed over should be held to that same standard —
+vague or ambiguous sections get rewritten through it before anything freezes.
+The contract below then derives from that spec; the spec describes the system,
+the contract defines this run's done.
 
 Write `contract.md` from the template. It has one job: define done so precisely
 that a stranger could grade the run. It contains:
@@ -105,14 +117,24 @@ that a stranger could grade the run. It contains:
 - **Escalation triggers** — the specific conditions under which you stop and ask
   (see Escalation below).
 
-If the user is present, show them the contract and get a yes before freezing. If
-not, freeze it yourself and flag that in the final report. Either way: after this
-point the criteria do not move (rule 2).
+If the task arrived with no criteria at all, you write them — and they must at
+minimum cover every failure mode found during Phase 0 recon. A soft contract that
+a lazy run would sail through defeats the whole skill.
 
-**Calibrate the instruments before building anything.** Run every CHECK command
-once, now, against the current code. Each must execute and be capable of failing —
-a check that errors with "command not found" or trivially passes on the broken
-baseline cannot gate anything. Fix the check, not later.
+**Calibrate the instruments before freezing.** Run every CHECK command once, now,
+against the current code. A fix-check (one that drives a change) must fail on the
+baseline; a fence-check (one that guards existing behavior) must pass on the
+baseline AND be proven able to fail — sabotage a copy or simulate the regression
+to show it trips. A check that errors out, or that cannot fail, gates nothing.
+Calibration findings are pre-freeze edits: if a user-supplied CHECK is broken but
+its criterion's intent is clear, fix the check minimally, preserve the intent, and
+flag it loudly in the contract and the report. If two criteria's *intents*
+contradict each other, do not freeze — escalate with the analysis and the largest
+satisfiable subset; picking a side is the user's call (rule 2).
+
+Then freeze. If the user is present, show them the contract and get a yes first.
+If not, freeze it yourself and flag that in the final report. Either way: after
+this point the criteria do not move (rule 2).
 
 ## Phase 2 — Plan
 
@@ -144,14 +166,24 @@ its evaluator is a stop condition, not an independent verifier.
 
 While looping:
 
-- Write or extend tests before implementation where the repo has a test culture;
-  match its style either way.
+- If a TDD skill is available (e.g. `test-driven-development`), invoke it and
+  follow it strictly for every code change: test first, watch it fail, minimal
+  code to pass — its "if you didn't watch the test fail, you don't know if it
+  tests the right thing" is the same law as calibration, applied per-cycle.
+  Without the skill, hold the same discipline yourself: write or extend tests
+  before implementation where the repo has a test culture; match its style
+  either way. If the repo has no tests at all, the contract's CHECK battery is
+  the test suite — calibration already gave you the red run; don't introduce a
+  framework mid-run, note the gap in the report instead.
 - When reality forces a deviation from the plan, take the conservative option, log
   it under "Deviations" in `notes.md`, and continue. Don't silently drift.
-- Never touch the criteria or their encoding tests to make a check pass (rule 2).
-  The temptation is the signal that something is wrong — investigate or escalate.
-- Watch the budget. At each cycle boundary note cycles remaining. At zero, stop
-  (rule 4).
+- Never touch the criteria or their encoding tests to make a check pass (rule 2),
+  and never make a check pass by detecting or special-casing the check itself —
+  gaming the instrument is the same violation as editing it. The temptation is
+  the signal that something is wrong — investigate or escalate.
+- Log a cycle's result line only after its CHECK run — never pre-fill a result.
+- Watch the budget — the `CYCLE <n>/<budget>` header is the counter. At zero,
+  stop (rule 4).
 
 Exit the loop only when every CHECK passes when you run it. That earns you the
 gate — it does not mean you're done.
@@ -162,7 +194,9 @@ Spawn a verifier subagent with fresh context. It receives exactly two things: th
 artifact (branch, diff, or paths) and the frozen criteria copied verbatim from
 `contract.md`. It does not receive your notes, your reasoning, or your claim that
 things pass. Use the verifier prompt in `references/templates.md` word for word,
-filling only the blanks.
+filling only the blanks: blank 1 is paths plus how to run — no adjectives, no
+framing; blank 2 is the numbered criteria and CHECK lines only, stripped of any
+annotations the contract carries.
 
 The verifier re-runs every check itself and returns a structured PASS/FAIL per
 criterion with evidence, then an ACCEPT/REJECT verdict. Its rules: uncertainty is
@@ -172,8 +206,9 @@ For anything with a UI: the verifier must start the app, interact with the chang
 flow, capture before/after screenshots into `evidence/`, and confirm zero new
 console errors. A text-only check on visual work is not verification.
 
-- **REJECT** → take the gap list back to Phase 3. This consumes one verification
-  round. Rounds exhausted → stop, deliver with gaps (rule 4).
+- **REJECT** → take the gap list back to Phase 3. A budget of N verification
+  rounds means N verifier invocations total. Rounds exhausted → stop, deliver
+  with gaps (rule 4).
 - **ACCEPT** → save the verifier's report to `evidence/` and proceed.
 
 If subagents are unavailable in your environment, the pattern still holds: output
@@ -184,7 +219,11 @@ self-review.
 ## Phase 5 — Deliver and compound
 
 Run a fresh-context code review if the environment has one (e.g. `/code-review`);
-save findings to `evidence/`. Then assemble the deliverable:
+save findings to `evidence/`. If the review confirms a real defect and build and
+verify budget remain, treat it as a REJECT: return to Phase 3, then re-verify.
+Out of budget → it goes on the gap list; never fix silently after the gate.
+Commit the work locally on a task branch — never a shared branch, never pushed —
+and put the branch and commit hash in the report. Then assemble the deliverable:
 
 - **Evidence packet** — diff summary, test output, screenshots, the verifier
   report, review findings, and the honest gap list. The user gets evidence, not
@@ -212,4 +251,6 @@ have. A clear failure report is a successful deliverable; a dressed-up one is no
   the user didn't explicitly pre-authorize it.
 
 When escalating, deliver the current state first — contract, log, evidence so far —
-so the user decides from facts, not from a question in a vacuum.
+so the user decides from facts, not from a question in a vacuum. If the user is
+absent, escalation is terminal: delivering that state IS the end of the run. Do
+not build around the blocker or pick a side to keep moving.

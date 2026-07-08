@@ -43,8 +43,10 @@ Build cycles: <n, default 5> · Verify rounds: <n, default 3> · Other: <wall-cl
 
 ## Cycle log (in notes.md)
 
-One line per build cycle. If your hypothesis for cycle N reads like cycle N-1's
-with "again" appended, rule 5 applies — write a genuinely different one first.
+One line per build cycle, written only AFTER the cycle's CHECK run — never
+pre-filled. The `<n>/<budget>` header is your budget counter. If your hypothesis
+for cycle N reads like cycle N-1's with "again" appended, rule 5 applies — write
+a genuinely different one first.
 
 ```
 CYCLE <n>/<budget> · hypothesis: <what you believe is wrong/needed and why>
@@ -58,6 +60,9 @@ CYCLE <n>/<budget> · hypothesis: <what you believe is wrong/needed and why>
 
 Fill the two blanks only. Do not add context, do not summarize your work for the
 verifier, do not include your notes — the whole point is that it grades blind.
+Blank 1 is paths plus how to run, nothing more. Blank 2 is the numbered criteria
+and their CHECK lines only — strip any annotations, calibration notes, or
+parentheticals the contract's criteria section carries.
 
 ```
 You are an independent verifier. You have no prior context about how this work was
