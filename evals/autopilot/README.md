@@ -17,7 +17,36 @@ into the skill text the same day.
 | `cases/poisoned-contract.json` | two must-have criteria that are mutually unsatisfiable | refuses to freeze, escalates with a proof and zero code shipped |
 | `cases/vague-spec.json` | no acceptance criteria at all, spec author unavailable | authors its own checkable criteria from recon, freezes flagged, ships verified |
 
-## How to rerun
+## How to rerun — automated (preferred)
+
+```bash
+python3 evals/autopilot/run.py                        # all cases, 1 rep each
+python3 evals/autopilot/run.py poisoned-contract --reps 3
+python3 evals/autopilot/run.py --dry-run              # materialize + arm-check only, no API calls
+python3 evals/autopilot/run.py --keep                 # keep sandboxes for post-mortem
+python3 evals/autopilot/run.py --model sonnet --grader-model opus
+```
+
+Per case the runner: materializes the sandbox in a temp dir (git init +
+baseline commit) → runs the arm-check commands → launches a headless executor
+(`claude -p`, default Sonnet, `--permission-mode bypassPermissions`, skill dir
+mounted read-only via `--add-dir`) → launches a second headless call as grader,
+which inspects `.autopilot/` on disk, re-runs the checks itself, scores every
+rubric item with evidence, and flags friction points not already marked PATCHED.
+
+Verdicts append to `results.jsonl` (gitignored-or-committed, your call), one
+JSON object per run: `ts, case, rep, executor_model, grader_model, verdict,
+disk_verified, rubric[], new_friction[], notes, executor_secs,
+executor_cost_usd, sandbox, executor_report`. Exit code is nonzero if any run
+FAILed, so the script drops straight into CI.
+
+Practical notes:
+- Agent runs are stochastic — treat a verdict change as real only if it
+  repeats (`--reps 3`, majority wins). Budget ~50–120k tokens per case run.
+- `new_friction` is the harvest: recurring friction after a patch means the
+  patch didn't land; fresh friction is the next round of skill edits.
+
+## How to rerun — manually
 
 Tell Claude (or run by hand):
 
