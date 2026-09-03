@@ -1,5 +1,8 @@
 {
   "name": "tool-box",
-  "description": "Agent skills by @gceico: challenger (adversarial decision stress-tester), skill-forge (workflow-to-skill builder), and autopilot (contract-gated autonomous feature delivery with independent verification).",
-  "author": { "name": "Gabriel Ceicoschi", "url": "https://github.com/gceico" }
+  "description": "Agent skills by @gceico: challenger (adversarial decision stress-tester), skill-forge (workflow-to-skill builder), and autopilot (contract-gated autonomous feature delivery with independent verification); system-organizer (knowledge, skill and reference organization with safe local migration).",
+  "author": {
+    "name": "Gabriel Ceicoschi",
+    "url": "https://github.com/gceico"
+  }
 }

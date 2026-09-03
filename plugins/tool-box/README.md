@@ -6,9 +6,14 @@ Agent skills I reach for constantly, bundled together.
 
 | Skill | Does |
 |---|---|
+| `system-organizer` | Organizes agent systems around canonical guidance, focused skills and specialist references, with dependency checks and preservation of operational records. |
 | `challenger` | Becomes an adversarial reviewer that stress-tests a technical decision — an architecture call, a stack pick, a spec, a migration plan — then forces a defend/revise verdict on the riskiest parts. For when you're the author *and* the only reviewer, tired, and biased toward shipping. |
 | `skill-forge` | Turns the work you keep redoing by hand into a real, reusable Agent Skill — interviews you, gates on research, picks the right shape, drafts with progressive disclosure, then role-plays a mock user to prove it works before you trust it. |
 | `autopilot` | Owns a feature or bugfix end-to-end while you walk away: hunts unknowns, freezes a contract of checkable acceptance criteria, runs a budgeted build loop, then gates delivery on an independent verifier that re-runs every check blind. Ends with an evidence packet and a project-memory write-back — or an honest failure report. |
+
+`system-organizer` audits and reorganizes agent knowledge, skills, references and operational-data boundaries. It preserves existing platform support and independent plugins. Use it for review-only advice or an authorized local migration; it does not require Notion, Studio names or a particular folder taxonomy.
+
+Try: “Use system-organizer to review this agent workspace. Identify competing instructions, misplaced data and redundant references, then propose the smallest useful reorganization.”
 
 ## Install
 
