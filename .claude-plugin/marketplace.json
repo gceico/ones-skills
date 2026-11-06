@@ -2,7 +2,10 @@
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "ones-skills",
   "description": "Agent skills by @gceico for Claude Code.",
-  "owner": { "name": "Gabriel Ceicoschi", "url": "https://github.com/gceico" },
+  "owner": {
+    "name": "Gabriel Ceicoschi",
+    "url": "https://github.com/gceico"
+  },
   "plugins": [
     {
       "name": "tool-box",
@@ -15,6 +18,12 @@
       "source": "./plugins/linkedin-ops",
       "category": "productivity",
       "description": "White-label LinkedIn ops loop: scout (swipe file), ideate (blue-ocean ideas), research (trends), analyze (your own stats), connect (harvest leads into a pipeline), outreach (pre-approved, stop-on-reply message sequence). Local .md/.csv files only; depends on the last30days plugin for cross-platform research."
+    },
+    {
+      "name": "photobook",
+      "source": "./plugins/photobook",
+      "category": "productivity",
+      "description": "AI photobook maker: turns phone photos, WhatsApp images, HEIC and scanned prints into a story-driven, print-ready photo book PDF (chapters, consistent colour grading, message pages, print-quality check) and guides or drives the order at Print&Bind (printenbind.nl) or any PDF printer."
     }
   ]
 }

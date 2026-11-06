@@ -1,0 +1,100 @@
+{
+  "title": "Anna",
+  "subtitle": "thirty years",
+  "output": "anna-30_print.pdf",
+  "page": {
+    "width_mm": 300,
+    "height_mm": 300,
+    "bleed_mm": 3,
+    "binding_margin_mm": 22,
+    "outer_margin_mm": 20,
+    "gap_mm": 6
+  },
+  "print": {
+    "min_dpi": 170,
+    "hero_min_dpi": 125
+  },
+  "cover": {
+    "photo": "childhood/img_0001",
+    "back_text": "2025"
+  },
+  "intro_pages": [
+    {
+      "type": "title"
+    },
+    {
+      "type": "stats",
+      "rows": [
+        [
+          "30",
+          "years"
+        ],
+        [
+          "12",
+          "countries"
+        ],
+        [
+          "1 000+",
+          "photos"
+        ]
+      ]
+    }
+  ],
+  "closing": {
+    "text": "to be continued…"
+  },
+  "grade": {
+    "rotate": {},
+    "crop": {},
+    "bw": [],
+    "old_photos": [
+      "childhood"
+    ],
+    "warmth": 1.0
+  },
+  "chapters": [
+    {
+      "folder": "childhood",
+      "title": "Roots",
+      "subtitle": "where it all began"
+    },
+    {
+      "folder": "parents",
+      "title": "Parents",
+      "subtitle": "Maria & John"
+    },
+    {
+      "folder": "friends",
+      "title": "Friends",
+      "subtitle": "the ones who stayed"
+    },
+    {
+      "folder": "us",
+      "title": "Us",
+      "subtitle": "the two of us",
+      "last": true
+    }
+  ],
+  "moves": {},
+  "exclude": [],
+  "feature": [],
+  "nofull": [],
+  "secondary": [],
+  "messages": [
+    {
+      "after": "parents",
+      "author": "Mom & Dad",
+      "text": "Happy 30th birthday!\nWe are so proud of you."
+    },
+    {
+      "after": "friends",
+      "author": "Eva",
+      "relation": "best friend",
+      "text": "To the next thirty."
+    },
+    {
+      "author": "Me",
+      "text": "Thank you for every single day."
+    }
+  ]
+}

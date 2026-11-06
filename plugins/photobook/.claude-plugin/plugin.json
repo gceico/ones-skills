@@ -1,0 +1,7 @@
+{
+  "name": "photobook",
+  "description": "AI photobook maker: turns phone photos, WhatsApp images, HEIC and scanned prints into a story-driven, print-ready photo book PDF (chapters, consistent colour grading, message pages, print-quality check) and guides or drives the order at Print&Bind (printenbind.nl) or any printer that accepts a PDF.",
+  "author": { "name": "Gabriel Ceicoschi", "url": "https://github.com/gceico" },
+  "homepage": "https://aibl.to",
+  "keywords": ["photobook", "photo book", "photo album", "fotoboek", "print", "pdf", "printenbind", "heic", "gift", "claude skill"]
+}

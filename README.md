@@ -8,6 +8,7 @@ A Claude Code marketplace of agent plugins, built by [@gceico](https://github.co
 /plugin marketplace add gceico/ones-skills
 /plugin install tool-box@ones-skills    # challenger + skill-forge
 /plugin install linkedin-ops@ones-skills       # LinkedIn creator ops loop
+/plugin install photobook@ones-skills          # photos -> print-ready photo book
 ```
 
 ## Plugins
@@ -16,6 +17,7 @@ A Claude Code marketplace of agent plugins, built by [@gceico](https://github.co
 |---|---|---|
 | [tool-box](plugins/tool-box/) | challenger, skill-forge, system-organizer | challenger stress-tests a technical decision before you commit; skill-forge turns workflows you keep redoing by hand into reusable, validated Agent Skills; system-organizer maintains knowledge, skills and references without duplicating operational data |
 | [linkedin-ops](plugins/linkedin-ops/) | scout, ideate, research, analyze, connect, outreach | White-label LinkedIn creator ops loop on local `.md`/`.csv` files — scout creators into a swipe file, ideate blue-ocean angles, research trends, analyze your own stats, harvest leads into a pipeline, and run a pre-approved stop-on-reply outreach sequence |
+| [photobook](plugins/photobook/) | photobook-maker | AI photobook maker: turns phone photos, WhatsApp images, HEIC files and old scans into a story-driven, print-ready photo book PDF — chapters, consistent colour grading, friends' message pages, a print-quality check — then guides or drives the order at Print&Bind or any PDF printer |
 
 ## Layout
 
